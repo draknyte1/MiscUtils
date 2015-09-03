@@ -56,7 +56,8 @@ public class ArcaneInfuser extends BlockContainer {
 	}
 
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-		player.openGui(MiscUtils.instance, 0, world, x, y, z);
+		if(!world.isRemote) {
+		player.openGui(MiscUtils.instance, 0, world, x, y, z);}
 		return true;
 	}
 

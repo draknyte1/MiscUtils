@@ -27,7 +27,7 @@ implements ActionListener
 	
 	//Vars
 
-	private static final boolean DEBUG = false;	
+	
 
 	@Mod.Instance(Strings.MODID)
 	public static MiscUtils instance;
@@ -67,7 +67,7 @@ implements ActionListener
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 	    proxy.postInit(event);
-		if (DEBUG){
+		if (Strings.DEBUG){
 		//Loader.
 		}
 	}
