@@ -1,5 +1,7 @@
 package miscutil.inventory;
 
+import miscutil.handler.BloodSteelFurnaceRecipes;
+import miscutil.tile_entity.TileEntityBloodSteelFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -7,30 +9,25 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
-
-import miscutil.handler.ArcaneInfuserRecipes;
-import miscutil.tile_entity.TileEntityArcaneInfuser;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ContainerArcaneInfuser extends Container {
+public class ContainerBloodSteelFurnace extends Container {
 	
-	private TileEntityArcaneInfuser tileInfuser;
+	private TileEntityBloodSteelFurnace tileFurnace;
 	private int lastCookTime;
 	private int lastBurnTime;
 	private int lastItemBurnTime;
 	
-	public ContainerArcaneInfuser(InventoryPlayer player, TileEntityArcaneInfuser tileEntityArcaneInfuser){
-		this.tileInfuser = tileEntityArcaneInfuser;
-		this.addSlotToContainer(new Slot(tileEntityArcaneInfuser, 0, 56, 17));
-		this.addSlotToContainer(new Slot(tileEntityArcaneInfuser, 1, 91, 65));
-		this.addSlotToContainer(new SlotFurnace(player.player, tileEntityArcaneInfuser, 2, 130, 117));
+	public ContainerBloodSteelFurnace(InventoryPlayer player, TileEntityBloodSteelFurnace tileEntityFurnace){
+		this.tileFurnace = tileEntityFurnace;
+		this.addSlotToContainer(new Slot(tileEntityFurnace, 0, 56, 17));
+		this.addSlotToContainer(new Slot(tileEntityFurnace, 1, 91, 65));
+		this.addSlotToContainer(new SlotFurnace(player.player, tileEntityFurnace, 2, 130, 117));
 		int i;
 		
 		for(i = 0; i < 3; ++i){
 			for(int j = 0; j < 9; ++j){
-				//this.addSlotToContainer(new Slot(player, j + i * 6 + 6, -150 + j * 18, 84 + i * 18));
 				this.addSlotToContainer(new Slot(player, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));//-- TODO -- This broke item handling for my Arcane Infuser
 			}
 		}
@@ -43,9 +40,9 @@ public class ContainerArcaneInfuser extends Container {
 
 	public void addCraftingToCrafters(ICrafting craft){
 		super.addCraftingToCrafters(craft);
-		craft.sendProgressBarUpdate(this, 0, this.tileInfuser.furnaceCookTime);
-		craft.sendProgressBarUpdate(this, 1, this.tileInfuser.furnaceBurnTime);
-		craft.sendProgressBarUpdate(this, 2, this.tileInfuser.currentBurnTime);
+		craft.sendProgressBarUpdate(this, 0, this.tileFurnace.furnaceCookTime);
+		craft.sendProgressBarUpdate(this, 1, this.tileFurnace.furnaceBurnTime);
+		craft.sendProgressBarUpdate(this, 2, this.tileFurnace.currentBurnTime);
 	}
 	
 	public void detectAndSendChanges(){
@@ -53,42 +50,42 @@ public class ContainerArcaneInfuser extends Container {
 		for(int i = 0; i < this.crafters.size(); ++i){
 			ICrafting craft = (ICrafting) this.crafters.get(i);
 			
-			if(this.lastCookTime != this.tileInfuser.furnaceCookTime){
-				craft.sendProgressBarUpdate(this, 0, this.tileInfuser.furnaceCookTime);
+			if(this.lastCookTime != this.tileFurnace.furnaceCookTime){
+				craft.sendProgressBarUpdate(this, 0, this.tileFurnace.furnaceCookTime);
 			}
 			
-			if(this.lastBurnTime != this.tileInfuser.furnaceBurnTime){
-				craft.sendProgressBarUpdate(this, 1, this.tileInfuser.furnaceBurnTime);
+			if(this.lastBurnTime != this.tileFurnace.furnaceBurnTime){
+				craft.sendProgressBarUpdate(this, 1, this.tileFurnace.furnaceBurnTime);
 			}
 			
-			if(this.lastItemBurnTime != this.tileInfuser.currentBurnTime){
-				craft.sendProgressBarUpdate(this, 2, this.tileInfuser.currentBurnTime);
+			if(this.lastItemBurnTime != this.tileFurnace.currentBurnTime){
+				craft.sendProgressBarUpdate(this, 2, this.tileFurnace.currentBurnTime);
 			}
 		}
 		
-		this.lastBurnTime = this.tileInfuser.furnaceBurnTime;
-		this.lastCookTime = this.tileInfuser.furnaceCookTime;
-		this.lastItemBurnTime = this.tileInfuser.currentBurnTime;
+		this.lastBurnTime = this.tileFurnace.furnaceBurnTime;
+		this.lastCookTime = this.tileFurnace.furnaceCookTime;
+		this.lastItemBurnTime = this.tileFurnace.currentBurnTime;
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int par1, int par2){
 		if(par1 == 0){
-			this.tileInfuser.furnaceCookTime = par2;
+			this.tileFurnace.furnaceCookTime = par2;
 		}
 		
 		if(par1 == 1){
-			this.tileInfuser.furnaceBurnTime = par2;
+			this.tileFurnace.furnaceBurnTime = par2;
 		}
 		
 		if(par1 == 2){
-			this.tileInfuser.currentBurnTime = par2;
+			this.tileFurnace.currentBurnTime = par2;
 		}
 	}
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return this.tileInfuser.isUseableByPlayer(player);
+		return this.tileFurnace.isUseableByPlayer(player);
 	}
 	
 	public ItemStack transferStackInSlot(EntityPlayer player, int par2){
@@ -105,11 +102,11 @@ public class ContainerArcaneInfuser extends Container {
 				}
 				slot.onSlotChange(itemstack1, itemstack);
 			}else if(par2 != 1 && par2 != 0){
-				if(ArcaneInfuserRecipes.smelting().getSmeltingResult(itemstack1) != null){
+				if(BloodSteelFurnaceRecipes.smelting().getSmeltingResult(itemstack1) != null){
 					if(!this.mergeItemStack(itemstack1, 0, 1, false)){
 						return null;
 					}
-				}else if(TileEntityArcaneInfuser.isItemFuel(itemstack1)){
+				}else if(TileEntityBloodSteelFurnace.isItemFuel(itemstack1)){
 					if(!this.mergeItemStack(itemstack1, 1, 2, false)){
 						return null;
 					}

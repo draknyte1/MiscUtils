@@ -2,6 +2,9 @@ package miscutil.block;
 
 import java.util.Random;
 
+import miscutil.MiscUtils;
+import miscutil.lib.Strings;
+import miscutil.tile_entity.TileEntityBloodSteelFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -16,13 +19,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import miscutil.MiscUtils;
-import miscutil.lib.Strings;
-import miscutil.tile_entity.TileEntityArcaneInfuser;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ArcaneInfuser extends BlockContainer {
+public class BloodSteelFurnace extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	private IIcon top;
@@ -33,7 +33,7 @@ public class ArcaneInfuser extends BlockContainer {
 	private final boolean isBurning2;
 	private final Random random = new Random();
 
-	protected ArcaneInfuser(boolean isActive) {
+	protected BloodSteelFurnace(boolean isActive) {
 		super(Material.rock);
 		isBurning2 = isActive;
 	}
@@ -56,17 +56,16 @@ public class ArcaneInfuser extends BlockContainer {
 	}
 
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-		if(!world.isRemote) {
-		player.openGui(MiscUtils.instance, 1, world, x, y, z);}
+		player.openGui(MiscUtils.instance, 0, world, x, y, z);
 		return true;
 	}
 
 	public Item getItemDropped(int par1, Random random, int par3) {
-		return Item.getItemFromBlock(ModBlocks.arcaneInfuser);
+		return Item.getItemFromBlock(ModBlocks.tutFurnace);
 	}
 
 	public Item getItem(World world, int par2, int par3, int par4) {
-		return Item.getItemFromBlock(ModBlocks.arcaneInfuser);
+		return Item.getItemFromBlock(ModBlocks.tutFurnace);
 	}
 	
 	/**
@@ -74,7 +73,7 @@ public class ArcaneInfuser extends BlockContainer {
      */
     public TileEntity createNewTileEntity(World world, int par2)
     {
-        return new TileEntityArcaneInfuser();
+        return new TileEntityBloodSteelFurnace();
     }
 
 	
@@ -92,19 +91,19 @@ public class ArcaneInfuser extends BlockContainer {
 			Block direction3 = world.getBlock(x + 1, y, z);
 			byte byte0 = 3;
 
-			if (direction.func_149730_j() && direction.func_149730_j()) {
+			if (direction.func_149730_j() && !direction.func_149730_j()) {
 				byte0 = 3;
 			}
 
-			if (direction1.func_149730_j() && direction1.func_149730_j()) {
+			if (direction1.func_149730_j() && !direction1.func_149730_j()) {
 				byte0 = 2;
 			}
 
-			if (direction2.func_149730_j() && direction2.func_149730_j()) {
+			if (direction2.func_149730_j() && !direction2.func_149730_j()) {
 				byte0 = 5;
 			}
 
-			if (direction3.func_149730_j() && direction3.func_149730_j()) {
+			if (direction3.func_149730_j() && !direction3.func_149730_j()) {
 				byte0 = 4;
 			}
 
@@ -132,7 +131,7 @@ public class ArcaneInfuser extends BlockContainer {
 		}
 
 		if (itemstack.hasDisplayName()) {
-			((TileEntityArcaneInfuser) world.getTileEntity(x, y, z)).furnaceName(itemstack.getDisplayName());
+			((TileEntityBloodSteelFurnace) world.getTileEntity(x, y, z)).furnaceName(itemstack.getDisplayName());
 		}
 	}
 
@@ -142,9 +141,9 @@ public class ArcaneInfuser extends BlockContainer {
 		isBurning = true;
 
 		if (burning) {
-			world.setBlock(x, y, z, ModBlocks.arcaneInfuserActive);
+			world.setBlock(x, y, z, ModBlocks.tutFurnaceActive);
 		} else {
-			world.setBlock(x, y, z, ModBlocks.arcaneInfuser);
+			world.setBlock(x, y, z, ModBlocks.tutFurnace);
 		}
 
 		isBurning = false;
@@ -158,7 +157,7 @@ public class ArcaneInfuser extends BlockContainer {
 
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		if (!isBurning) {
-			TileEntityArcaneInfuser tileentitytutfurnace = (TileEntityArcaneInfuser) world.getTileEntity(x, y, z);
+			TileEntityBloodSteelFurnace tileentitytutfurnace = (TileEntityBloodSteelFurnace) world.getTileEntity(x, y, z);
 
 			if (tileentitytutfurnace != null) {
 				for (int i = 0; i < tileentitytutfurnace.getSizeInventory(); ++i) {

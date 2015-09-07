@@ -1,5 +1,9 @@
 package miscutil.tile_entity;
 
+import miscutil.block.ModBlocks;
+import miscutil.block.BloodSteelFurnace;
+import miscutil.handler.BloodSteelFurnaceRecipes;
+import miscutil.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,17 +14,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-
-import miscutil.block.ArcaneInfuser;
-import miscutil.handler.ArcaneInfuserRecipes;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityArcaneInfuser extends TileEntity implements ISidedInventory {
+@SuppressWarnings("unused")
+public class TileEntityBloodSteelFurnace extends TileEntity implements ISidedInventory {
 
 	private static final int[] slotsTop = new int[] { 0 };
 	private static final int[] slotsBottom = new int[] { 2, 1 };
@@ -92,7 +95,7 @@ public class TileEntityArcaneInfuser extends TileEntity implements ISidedInvento
 
 	@Override
 	public String getInventoryName() {
-		return this.hasCustomInventoryName() ? this.furnaceName : "Arcane Infuser";
+		return this.hasCustomInventoryName() ? this.furnaceName : "BloodSteel Furnace";
 	}
 
 	@Override
@@ -206,7 +209,7 @@ public class TileEntityArcaneInfuser extends TileEntity implements ISidedInvento
 
 		if (flag != this.furnaceBurnTime > 0) {
 			flag1 = true;
-			ArcaneInfuser.updateBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+			BloodSteelFurnace.updateBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 		}
 
 		if (flag1) {
@@ -218,7 +221,7 @@ public class TileEntityArcaneInfuser extends TileEntity implements ISidedInvento
 		if (this.furnaceItemStacks[0] == null) {
 			return false;
 		} else {
-			ItemStack itemstack = ArcaneInfuserRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
+			ItemStack itemstack = BloodSteelFurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 			if (itemstack == null) return false;
 			if (this.furnaceItemStacks[2] == null) return true;
 			if (!this.furnaceItemStacks[2].isItemEqual(itemstack)) return false;
@@ -229,7 +232,7 @@ public class TileEntityArcaneInfuser extends TileEntity implements ISidedInvento
 
 	public void smeltItem() {
 		if (this.canSmelt()) {
-			ItemStack itemstack = ArcaneInfuserRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
+			ItemStack itemstack = BloodSteelFurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 
 			if (this.furnaceItemStacks[2] == null) {
 				this.furnaceItemStacks[2] = itemstack.copy();
@@ -253,13 +256,17 @@ public class TileEntityArcaneInfuser extends TileEntity implements ISidedInvento
 			
 			if(item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air){
 				Block block = Block.getBlockFromItem(item);
-								
+				
+				if(block == ModBlocks.blockBloodSteel){
+					return 200;
+				}
+				
 				if(block.getMaterial() == Material.rock){
 					return 300;
 				}
 			}
 			
-			//if(item == ModItems.tutItem) return 1600;
+			if(item == ModItems.itemIngotBloodSteel) return 1600;
 			if(item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("EMERALD")) return 300;
 			return GameRegistry.getFuelValue(itemstack);
 		}

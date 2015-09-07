@@ -37,6 +37,8 @@ item.itemPlateBloodSteel.name=Blood Steel Plate
 
 
 tile.blockBloodSteel.name=Block of Blood Steel
+tile.BloodSteelFurnace.name=Blood Steel Industrial Furnace
+tile.BloodSteelChest.name=Blood Steel Chest
 tile.ArcaneInfuser.name=Arcane Infuser
 
 entity.BloodSteelMob.name=Friendly Fellow [WIP]

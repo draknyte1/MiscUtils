@@ -41,13 +41,13 @@ implements ActionListener
 	{
 		
 		TMCreativeTabs.initialiseTabs();
-		proxy.preInit(event);
-		proxy.registerTileEntities();
-		proxy.registerRenderThings();
 		TMEntity.mainRegistry();
 		CraftingManager.mainRegistry();
 		TMWorld.mainRegistry();
 		TMHooks.mainRegistry();
+		proxy.registerTileEntities();
+		proxy.registerRenderThings();
+		proxy.preInit(event);
 		
 
 
@@ -76,7 +76,9 @@ implements ActionListener
 	public void serverStarting(FMLServerStartingEvent event)
 	{
 
-		
+		//while (Strings.DEBUG){
+		//Thread.setDefaultUncaughtExceptionHandler(null);
+		//}
 
 	}
 
