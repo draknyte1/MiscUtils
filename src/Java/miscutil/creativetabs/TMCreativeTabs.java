@@ -12,7 +12,7 @@ public class TMCreativeTabs {
 	public static void initialiseTabs(){
 		tabBlock = new MiscUtilCreativeTabBlock("MiscUtilBlockTab");
 		tabMisc = new MiscUtilCreativeTabMisc("MiscUtilMiscTab");
-		tabCombat = new MiscUtilCreativeTabCombat("MiscUtilCombatTab");
-		tabTools = new MiscUtilCreativeTabTools("MiscUtilToolsTab");
+		//tabCombat = new MiscUtilCreativeTabCombat("MiscUtilCombatTab");
+		//tabTools = new MiscUtilCreativeTabTools("MiscUtilToolsTab");
 	}
 }

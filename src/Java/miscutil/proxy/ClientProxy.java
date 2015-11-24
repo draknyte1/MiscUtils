@@ -5,11 +5,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import miscutil.CommonProxy;
-import miscutil.entity.EntityBloodSteelHostileMob;
-import miscutil.entity.EntityBloodSteelMob;
-import miscutil.model.ModelBloodSteelMob;
-import miscutil.render.RenderBloodSteelMob;
-import miscutil.render.RenderBloodSteelMobHostile;
 
 public class ClientProxy extends CommonProxy{
 
@@ -32,8 +27,8 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	public void registerRenderThings(){
-		RenderingRegistry.registerEntityRenderingHandler(EntityBloodSteelMob.class, new RenderBloodSteelMob(new ModelBloodSteelMob(), 0));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBloodSteelHostileMob.class, new RenderBloodSteelMobHostile(new ModelBloodSteelMob(), 0));
+		//RenderingRegistry.registerEntityRenderingHandler(EntityBloodSteelMob.class, new RenderBloodSteelMob(new ModelBloodSteelMob(), 0));
+		//RenderingRegistry.registerEntityRenderingHandler(EntityBloodSteelHostileMob.class, new RenderBloodSteelMobHostile(new ModelBloodSteelMob(), 0));
 		//RenderingRegistry.registerEntityRenderingHandler(EntityGrenade.class, new RenderSnowball(ModItems.tutGrenade));
 		
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBloodSteelChest.class, new BloodSteelChestRenderer());

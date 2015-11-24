@@ -1,16 +1,10 @@
 package miscutil;
 
 import miscutil.block.ModBlocks;
-import miscutil.handler.BloodSteelFurnaceGuiHandler;
 import miscutil.item.ModItems;
-import miscutil.tile_entity.TileEntityArcaneInfuser;
-import miscutil.tile_entity.TileEntityBloodSteelChest;
-import miscutil.tile_entity.TileEntityBloodSteelFurnace;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
@@ -28,15 +22,15 @@ public class CommonProxy {
     }
     	
 	public void registerNetworkStuff(){
-		NetworkRegistry.INSTANCE.registerGuiHandler(MiscUtils.instance, new BloodSteelFurnaceGuiHandler());
+		//NetworkRegistry.INSTANCE.registerGuiHandler(MiscUtils.instance, new BloodSteelFurnaceGuiHandler());
 		
 	}
 
 	public void registerTileEntities(){
-		GameRegistry.registerTileEntity(TileEntityBloodSteelChest.class, "tileEntityBloodSteelChest");
-		GameRegistry.registerTileEntity(TileEntityBloodSteelFurnace.class, "tileEntityBloodSteelFurnace");
+		//GameRegistry.registerTileEntity(TileEntityBloodSteelChest.class, "tileEntityBloodSteelChest");
+		//GameRegistry.registerTileEntity(TileEntityBloodSteelFurnace.class, "tileEntityBloodSteelFurnace");
 		//GameRegistry.registerTileEntity(TileEntityBloodSteelChest.class, Strings.MODID);
-		GameRegistry.registerTileEntity(TileEntityArcaneInfuser.class, "TileEntityArcaneInfuser");
+		//GameRegistry.registerTileEntity(TileEntityArcaneInfuser.class, "TileEntityArcaneInfuser");
 	}
 	
 	public void registerRenderThings() {

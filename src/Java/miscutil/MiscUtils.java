@@ -1,6 +1,7 @@
 package miscutil;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -11,13 +12,12 @@ import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.UnknownFormatConversionException;
 
 import miscutil.creativetabs.TMCreativeTabs;
-import miscutil.entity.TMEntity;
 import miscutil.lib.Strings;
 import miscutil.main.CraftingManager;
-import miscutil.main.TMHooks;
-import miscutil.world.TMWorld;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid=Strings.MODID, name="Misc. Utils", version=Strings.VERSION)
@@ -26,7 +26,6 @@ implements ActionListener
 { 
 	
 	//Vars
-
 	
 
 	@Mod.Instance(Strings.MODID)
@@ -34,17 +33,19 @@ implements ActionListener
 	
 	@SidedProxy(clientSide="miscutil.proxy.ClientProxy", serverSide="miscutil.proxy.ServerProxy")
 	public static CommonProxy proxy;
+	
 
 	//Pre-Init
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		
+		if (Strings.DEBUG){
+			FMLLog.info("Doing some house cleaning.");}
 		TMCreativeTabs.initialiseTabs();
-		TMEntity.mainRegistry();
+		//TMEntity.mainRegistry();
 		CraftingManager.mainRegistry();
-		TMWorld.mainRegistry();
-		TMHooks.mainRegistry();
+		//TMWorld.mainRegistry();
+		//TMHooks.mainRegistry();
 		proxy.registerTileEntities();
 		proxy.registerRenderThings();
 		proxy.preInit(event);
@@ -57,7 +58,24 @@ implements ActionListener
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+		if (Strings.DEBUG){
+			FMLLog.info("Double checking floating point precision.");}
+			try {
+				Thread.sleep(100);
+				Benchmark GammeRayBurst = new Benchmark();
+				GammeRayBurst.math();
+			} catch (InterruptedException | ParseException | NumberFormatException | UnknownFormatConversionException e) {
+				if (Strings.DEBUG){
+					e.printStackTrace();
+					FMLLog.info("Math went wrong somewhere.");}
+				;
+			}
 		proxy.init(event);
+		if (Strings.DEBUG){
+			Benchmark GammeRayBurst = new Benchmark();
+			String Insight = GammeRayBurst.superhash("This is Absolution");
+			FMLLog.info(Insight);
+			FMLLog.info("Math is ok.");}
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 		proxy.registerNetworkStuff();
@@ -66,10 +84,9 @@ implements ActionListener
 	//Post-Init
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-	    proxy.postInit(event);
 		if (Strings.DEBUG){
-		//Loader.
-		}
+			FMLLog.info("Tidying things up.");}
+	    proxy.postInit(event);
 	}
 	
 	@Mod.EventHandler
