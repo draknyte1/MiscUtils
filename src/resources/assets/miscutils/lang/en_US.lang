@@ -41,5 +41,13 @@ tile.BloodSteelFurnace.name=Blood Steel Industrial Furnace
 tile.BloodSteelChest.name=Blood Steel Chest
 tile.ArcaneInfuser.name=Arcane Infuser
 
+tile.blockToolBuilder.name=GregTech Tool Constructor
+item.itemBufferCore.name=Buffer Core
+item.itemStaballoyPickaxe.name=Pick of the Ages
+item.itemIngotStaballoy.name=Staballoy Ingot
+item.itemPlateStaballoy.name=Staballoy Plate
+
 entity.BloodSteelMob.name=Friendly Fellow [WIP]
 entity.BloodSteelHostileMob.name=Hostile Mob [WIP]
+
+tile.storage.name=[WIP] Storage Block
